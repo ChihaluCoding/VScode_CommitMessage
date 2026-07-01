@@ -1,0 +1,130 @@
+{
+  "name": "commit-message-push",
+  "displayName": "Commit Message Push",
+  "description": "Generate commit messages with local Codex or opencode CLI and auto-push only generated commits.",
+  "version": "0.0.6",
+  "publisher": "local",
+  "private": true,
+  "engines": {
+    "vscode": "^1.109.0"
+  },
+  "categories": [
+    "Source Control"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "onCommand:commitPush.generateCommitMessage"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "commitPush.generateCommitMessage",
+        "title": "commitMessage生成",
+        "category": "Commit Message Push",
+        "icon": "$(sparkle)"
+      }
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "command": "commitPush.generateCommitMessage",
+          "when": "scmProvider == git",
+          "group": "navigation@0"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "commitPush.generateCommitMessage"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Commit Message Push",
+      "properties": {
+        "commitPush.provider": {
+          "type": "string",
+          "enum": [
+            "codex",
+            "opencode"
+          ],
+          "default": "opencode",
+          "description": "コミットメッセージ生成に使用するプロバイダ。`opencode` は `opencode run`、`codex` は `codex exec` を使用します。"
+        },
+        "commitPush.model": {
+          "type": "string",
+          "default": "gpt-5.4-mini",
+          "description": "Model name passed to `codex exec -m` (provider=codex 時)。"
+        },
+        "commitPush.opencodeModel": {
+          "type": "string",
+          "default": "opencode-go/deepseek-v4-flash",
+          "description": "Model name passed to `opencode run -m` (provider=opencode 時)。`opencode-go/<model>` 形式。"
+        },
+        "commitPush.reasoningEffort": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "xhigh"
+          ],
+          "default": "high",
+          "description": "Reasoning effort. codex は `model_reasoning_effort`、opencode は `--variant` にマップされます。"
+        },
+        "commitPush.includeUntracked": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include untracked files in the prompt context."
+        },
+        "commitPush.diffMaxChars": {
+          "type": "number",
+          "default": 12000,
+          "minimum": 1000,
+          "description": "Maximum characters of diff text sent to Codex."
+        },
+        "commitPush.timeoutSeconds": {
+          "type": "number",
+          "default": 90,
+          "minimum": 10,
+          "description": "Timeout for one Codex generation run in seconds."
+        },
+        "commitPush.codexCommandPath": {
+          "type": "string",
+          "default": "codex",
+          "description": "Codex CLI command path (provider=codex 時)。"
+        },
+        "commitPush.opencodeCommandPath": {
+          "type": "string",
+          "default": "opencode",
+          "description": "opencode CLI command path (provider=opencode 時)。"
+        },
+        "commitPush.autoCommitAfterGenerate": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically commit right after generating the commit message."
+        },
+        "commitPush.pushRemote": {
+          "type": "string",
+          "default": "origin",
+          "description": "Remote name used for auto-push."
+        },
+        "commitPush.pushBranch": {
+          "type": "string",
+          "default": "main",
+          "description": "Branch name required for auto-push and used as push target."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.8",
+    "@types/vscode": "^1.109.0",
+    "@vscode/vsce": "^3.9.2",
+    "typescript": "^5.9.2"
+  }
+}
