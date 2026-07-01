@@ -64,11 +64,11 @@ function getSettings(): ExtensionSettings {
 
   const model = config.get<string>('model', 'gpt-5.4-mini');
   const opencodeModel = config.get<string>('opencodeModel', 'opencode-go/deepseek-v4-flash');
-  const reasoningEffortRaw = config.get<string>('reasoningEffort', 'high');
+  const reasoningEffortRaw = config.get<string>('reasoningEffort', 'low');
   const reasoningEffortOptions: ReasoningEffort[] = ['low', 'medium', 'high', 'xhigh'];
   const reasoningEffort = reasoningEffortOptions.includes(reasoningEffortRaw as ReasoningEffort)
     ? (reasoningEffortRaw as ReasoningEffort)
-    : 'high';
+    : 'low';
 
   const includeUntracked = config.get<boolean>('includeUntracked', true);
   const diffMaxChars = Math.max(1000, config.get<number>('diffMaxChars', 12000));

@@ -77,8 +77,8 @@
             "high",
             "xhigh"
           ],
-          "default": "high",
-          "description": "Reasoning effort. codex は `model_reasoning_effort`、opencode は `--variant` にマップされます。"
+          "default": "low",
+          "description": "推論強度。codex は `model_reasoning_effort`、opencode は `--variant` にマップされます。"
         },
         "commitPush.includeUntracked": {
           "type": "boolean",

@@ -31,7 +31,7 @@ VS Code拡張です。ソース管理ツールバーの `commitMessage生成` �
 | `commitPush.provider` | string | `opencode` | プロバイダ。`codex` または `opencode` |
 | `commitPush.model` | string | `gpt-5.4-mini` | `codex exec -m` に渡すモデル（provider=codex 時） |
 | `commitPush.opencodeModel` | string | `opencode-go/deepseek-v4-flash` | `opencode run -m` に渡すモデル（provider=opencode 時）。`opencode-go/<model>` 形式 |
-| `commitPush.reasoningEffort` | string | `high` | 推論強度。codex は `model_reasoning_effort`、opencode は `--variant` にマップ |
+| `commitPush.reasoningEffort` | string | `low` | 推論強度。codex は `model_reasoning_effort`、opencode は `--variant` にマップ |
 | `commitPush.includeUntracked` | boolean | `true` | 未追跡ファイル一覧をプロンプトに含める |
 | `commitPush.diffMaxChars` | number | `12000` | 差分文字数上限。超過時は `[TRUNCATED]` 付与 |
 | `commitPush.timeoutSeconds` | number | `90` | 生成タイムアウト秒数 |
