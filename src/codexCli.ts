@@ -161,6 +161,16 @@ async function runCodexWithCommand(
   const args = [
     'exec',
     '--json',
+    '--skip-git-repo-check',
+    '--ephemeral',
+    '--ignore-user-config',
+    '--ignore-rules',
+    '--disable', 'personality',
+    '--disable', 'computer_use',
+    '--disable', 'browser_use',
+    '--disable', 'image_generation',
+    '--disable', 'plugins',
+    '--disable', 'multi_agent',
     '-m',
     options.model,
     '-c',
@@ -169,7 +179,7 @@ async function runCodexWithCommand(
   ];
 
   options.output.appendLine(
-    `[codex] Running: ${commandPath} exec --json -m ${options.model} -c model_reasoning_effort="${options.reasoningEffort}" <prompt>`
+    `[codex] Running: ${commandPath} exec --json --ephemeral --ignore-user-config -m ${options.model} -c model_reasoning_effort="${options.reasoningEffort}" <prompt>`
   );
 
   return new Promise<string>((resolve, reject) => {
