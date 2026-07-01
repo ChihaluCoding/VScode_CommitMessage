@@ -40,10 +40,3 @@ VS Code拡張です。ソース管理ツールバーの `commitMessage生成` �
 | `commitPush.autoCommitAfterGenerate` | boolean | `true` | 生成直後に自動コミットする |
 | `commitPush.pushRemote` | string | `origin` | 自動pushのremote名 |
 | `commitPush.pushBranch` | string | `main` | 自動push対象ブランチ名 |
-
-## Usage
-
-1. Source Controlビューで `commitMessage生成` を押す  
-2. SCM入力欄に生成メッセージが入る  
-3. 既定では自動コミットされる（`autoCommitAfterGenerate=true`）  
-4. 最新コミット1行目が生成文面と一致し、現在ブランチが `pushBranch` と一致すると自動 push
