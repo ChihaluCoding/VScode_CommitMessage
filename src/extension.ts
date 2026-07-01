@@ -71,7 +71,7 @@ function getSettings(): ExtensionSettings {
     : 'low';
 
   const includeUntracked = config.get<boolean>('includeUntracked', true);
-  const diffMaxChars = Math.max(1000, config.get<number>('diffMaxChars', 12000));
+  const diffMaxChars = Math.max(1000, config.get<number>('diffMaxChars', 6000));
   const timeoutSeconds = Math.max(10, config.get<number>('timeoutSeconds', 90));
   const codexCommandPath = config.get<string>('codexCommandPath', 'codex');
   const opencodeCommandPath = config.get<string>('opencodeCommandPath', 'opencode');

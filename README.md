@@ -33,7 +33,7 @@ VS Code拡張です。ソース管理ツールバーの `commitMessage生成` �
 | `commitPush.opencodeModel` | string | `opencode-go/deepseek-v4-flash` | `opencode run -m` に渡すモデル（provider=opencode 時）。`opencode-go/<model>` 形式 |
 | `commitPush.reasoningEffort` | string | `low` | 推論強度。codex は `model_reasoning_effort`、opencode は `--variant` にマップ |
 | `commitPush.includeUntracked` | boolean | `true` | 未追跡ファイル一覧をプロンプトに含める |
-| `commitPush.diffMaxChars` | number | `12000` | 差分文字数上限。超過時は `[TRUNCATED]` 付与 |
+| `commitPush.diffMaxChars` | number | `6000` | 差分文字数上限。超過時は `[TRUNCATED]` 付与。小さいほど高速 |
 | `commitPush.timeoutSeconds` | number | `90` | 生成タイムアウト秒数 |
 | `commitPush.codexCommandPath` | string | `codex` | Codex CLI コマンドパス |
 | `commitPush.opencodeCommandPath` | string | `opencode` | opencode CLI コマンドパス |

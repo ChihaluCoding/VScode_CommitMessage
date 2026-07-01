@@ -87,9 +87,9 @@
         },
         "commitPush.diffMaxChars": {
           "type": "number",
-          "default": 12000,
+          "default": 6000,
           "minimum": 1000,
-          "description": "Maximum characters of diff text sent to Codex."
+          "description": "差分文字数上限。超過時は `[TRUNCATED]` 付与。小さいほど高速。"
         },
         "commitPush.timeoutSeconds": {
           "type": "number",
