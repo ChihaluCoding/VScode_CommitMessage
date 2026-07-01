@@ -10,6 +10,7 @@ import { buildCommitMessagePrompt } from './prompt';
 import { PendingCommitState } from './state';
 
 const COMMAND_ID = 'commitPush.generateCommitMessage';
+const SWITCH_PROVIDER_COMMAND_ID = 'commitPush.switchProvider';
 const CONFIG_NAMESPACE = 'commitPush';
 const OUTPUT_CHANNEL_NAME = 'Commit Message Push';
 const execFileAsync = promisify(execFile);
@@ -407,6 +408,43 @@ async function handleGenerateCommand(
   }
 }
 
+async function handleSwitchProviderCommand(output: vscode.OutputChannel): Promise<void> {
+  const config = vscode.workspace.getConfiguration(CONFIG_NAMESPACE);
+  const current = config.get<string>('provider', 'opencode');
+  const currentModel = current === 'opencode'
+    ? config.get<string>('opencodeModel', 'opencode-go/deepseek-v4-flash')
+    : config.get<string>('model', 'gpt-5.4-mini');
+
+  const items: Array<vscode.QuickPickItem & { provider: ProviderType }> = [
+    {
+      label: 'opencode',
+      description: `${current === 'opencode' ? '● 現在' : '○'}  opencode-go/deepseek-v4-flash が既定`,
+      detail: `現在のモデル: ${current === 'opencode' ? currentModel : 'opencode-go/deepseek-v4-flash'}`,
+      provider: 'opencode'
+    },
+    {
+      label: 'codex',
+      description: `${current === 'codex' ? '● 現在' : '○'}  gpt-5.4-mini が既定`,
+      detail: `現在のモデル: ${current === 'codex' ? currentModel : 'gpt-5.4-mini'}`,
+      provider: 'codex'
+    }
+  ];
+
+  const picked = await vscode.window.showQuickPick(items, {
+    placeHolder: `プロバイダを選択（現在: ${current} / モデル: ${currentModel}）`
+  });
+
+  if (!picked || picked.provider === current) {
+    return;
+  }
+
+  await config.update('provider', picked.provider, vscode.ConfigurationTarget.Global);
+  vscode.window.showInformationMessage(
+    `プロバイダを ${picked.provider} に切り替えました。`
+  );
+  output.appendLine(`[switch] Provider switched to ${picked.provider}`);
+}
+
 export async function activate(context: vscode.ExtensionContext): Promise<void> {
   const output = vscode.window.createOutputChannel(OUTPUT_CHANNEL_NAME);
   context.subscriptions.push(output);
@@ -429,6 +467,11 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     await handleGenerateCommand(api, pendingState, output, pushInFlight, contextArg);
   });
   context.subscriptions.push(generateCommand);
+
+  const switchProviderCommand = vscode.commands.registerCommand(SWITCH_PROVIDER_COMMAND_ID, async () => {
+    await handleSwitchProviderCommand(output);
+  });
+  context.subscriptions.push(switchProviderCommand);
 
   output.appendLine('[activate] Extension activated.');
 }

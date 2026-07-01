@@ -47,10 +47,3 @@ VS Code拡張です。ソース管理ツールバーの `commitMessage生成` �
 2. SCM入力欄に生成メッセージが入る  
 3. 既定では自動コミットされる（`autoCommitAfterGenerate=true`）  
 4. 最新コミット1行目が生成文面と一致し、現在ブランチが `pushBranch` と一致すると自動 push
-
-## Development
-
-```bash
-npm install
-npm run compile
-```

@@ -13,7 +13,8 @@
   ],
   "main": "./out/extension.js",
   "activationEvents": [
-    "onCommand:commitPush.generateCommitMessage"
+    "onCommand:commitPush.generateCommitMessage",
+    "onCommand:commitPush.switchProvider"
   ],
   "contributes": {
     "commands": [
@@ -22,6 +23,11 @@
         "title": "commitMessage生成",
         "category": "Commit Message Push",
         "icon": "$(sparkle)"
+      },
+      {
+        "command": "commitPush.switchProvider",
+        "title": "プロバイダ切り替え",
+        "category": "Commit Message Push"
       }
     ],
     "menus": {
@@ -35,6 +41,9 @@
       "commandPalette": [
         {
           "command": "commitPush.generateCommitMessage"
+        },
+        {
+          "command": "commitPush.switchProvider"
         }
       ]
     },
